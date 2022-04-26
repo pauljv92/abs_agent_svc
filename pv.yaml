@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: abs-aws-mnt
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  claimRef:
+    namespace: absolute
+    name: absolute-aws-nfs
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  csi:
+    driver: nfs.csi.k8s.io
+    readOnly: false
+    volumeAttributes:
+      server: <To be filled>
+      share: /var/nfs/k8s/abs
